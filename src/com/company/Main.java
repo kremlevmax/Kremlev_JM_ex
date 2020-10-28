@@ -94,12 +94,7 @@ public class Main {
                 break;
 
             default:
-                try {
-                    throw new Exception("Введен некорректный пример");
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
                     return -1;
-                }
         }
         return result;
     }
@@ -145,6 +140,8 @@ public class Main {
         resultString = "";
 
         int result;
+        int operatorIndex;
+        operatorIndex = 0;
         result = 0;
 
         math_operator = "";
@@ -154,34 +151,27 @@ public class Main {
         char[] mathOperators = {'+', '-', '/', '*'};
 
         for (int i = 0; i < expression.length(); i++) {
-            try {
-                for (int j = 0; j < mathOperators.length; j++) {
-                    if (expression.charAt(i)== mathOperators[j]) {
-                        math_operator += expression.charAt(i);
-                    }
+            for (int j = 0; j < mathOperators.length; j++) {
+                if (expression.charAt(i) == mathOperators[j]) {
+                    math_operator += expression.charAt(i);
+                    operatorIndex = i;
                 }
-            } catch (Exception ex) {
-                        return "Введен некорректный пример";
-                    }
-                        for (int k = 0; k < i; k++) {
+            }
+        }
+
+
+                        for (int k = 0; k < operatorIndex; k++) {
                             if (expression.charAt(k) != ' ') {
                                 num1S += expression.charAt(k);
                             }
                         }
 
-                        for (int k = i+1; k < expression.length(); k++) {
+                        for (int k = operatorIndex+1; k < expression.length(); k++) {
                             if (expression.charAt(k) != ' ') {
                                 num2S += expression.charAt(k);
                             }
                         }
-                    } try {
-            if (num1S.charAt(0) == '-'||num2S.charAt(0)=='-'){
-                throw new Exception("Введен некорректный пример");
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            return resultString;
-        }
+
 
         if (Character.isDigit(num1S.charAt(0)) && Character.isDigit(num2S.charAt(0))){
             num1 = strToInt(num1S);
@@ -195,14 +185,7 @@ public class Main {
 
         result = performOperation(math_operator, num1, num2);
         resultString = romanToArabic(result);
-        }
-            else try {{
-            throw new Exception("Введен некорректный пример");
-        }
-    } catch (Exception ex) {
-        System.out.println(ex.getMessage());
-    }
+            }
         return resultString;
     }
-
 }

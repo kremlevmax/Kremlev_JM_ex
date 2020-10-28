@@ -17,6 +17,11 @@ public class Main {
     public static boolean isRoman(char c) {
             if (c == 'I' || c == 'V' || c == 'X') {
                 return true;
+            } else try {
+                throw new Exception();
+            } catch (Exception ex){
+                System.out.println("Ошибка! Введены некорректные римские числа!");
+                System.exit(1);
             }
             return false;
     }
@@ -30,6 +35,7 @@ public class Main {
         if (c == 'X')
             return 10;
         return -1;
+
     }
 
     public static int romanToArabic(String s) {
@@ -79,6 +85,15 @@ public class Main {
     public static int performOperation(String math_operator, int num1, int num2) {
         int result;
 
+        try {
+            if (num1 < 0 || num1 > 10 || num2 < 0 || num2 > 10){
+                throw new Exception();
+            }
+        } catch (Exception ex){
+            System.out.println("Ошибка! Введены числа больше 10 или меньше 0");
+            System.exit(1);
+        }
+
         switch (math_operator) {
             case "+":
                 result = num1 + num2;
@@ -100,34 +115,24 @@ public class Main {
     }
 
     public static String romanToArabic(int number){
-        String[] romNumbers = {
-                "",
-                "I",
-                "II",
-                "III",
-                "IV",
-                "V",
-                "VI",
-                "VII",
-                "VIII",
-                "IX"
-        };
 
         String result;
-
         result = "";
+        int counter = 0;
 
-        int decimals, left;
 
-        decimals = number / 10;
-        left = number % 10;
 
-        for (int i = 0; i < decimals; i++) {
-            result = result + "X";
+        String[] romanNumbers = new String[] {"C","XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[] arabicNumbers = new int[] {100, 90, 50, 40, 10, 9, 5, 4,  1};
+
+        for (int i = 0; i <= arabicNumbers.length - 1; i++) {
+            counter = number / arabicNumbers[i];
+            number %= arabicNumbers[i];
+            while (counter > 0) {
+                result += romanNumbers[i];
+                counter--;
+            }
         }
-
-        result += romNumbers[left];
-        
         return result;
     }
     
@@ -157,6 +162,13 @@ public class Main {
                     operatorIndex = i;
                 }
             }
+        }
+
+        if (math_operator == "")   try {
+            throw new Exception();
+        } catch (Exception ex){
+            System.out.println("Ошибка! Введен некорректный арифметический оператор!");
+            System.exit(1);
         }
 
 
